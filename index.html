@@ -8,105 +8,109 @@
 * { box-sizing: border-box; }
 
 html, body {
-  margin: 0; padding: 0; height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background: #ffffff;
+margin: 0; padding: 0; height: 100%;
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+background: #ffffff;
 }
 
 .centered-wrapper {
-  display: flex; flex-direction: column;
-  justify-content: center; align-items: center;
-  height: 100vh; text-align: center; padding: 20px;
+display: flex; flex-direction: column;
+justify-content: center; align-items: center;
+height: 100vh; text-align: center; padding: 20px;
 }
 
-.centered-wrapper img {
-  max-width: 80%; width: 360px; height: auto;
-  cursor: pointer; transition: transform 0.3s ease;
+.centered-wrapper video {
+max-width: 80%; width: 360px; height: auto;
+cursor: pointer; transition: transform 0.3s ease;
+border-radius: 12px;
 }
 
-.centered-wrapper img:hover {
-  transform: scale(1.03);
+.centered-wrapper video:hover {
+transform: scale(1.03);
 }
 
 .overlay {
-  position: fixed; top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex; justify-content: center; align-items: center;
-  z-index: 10;
-  transition: opacity 0.5s ease;
-  opacity: 0;
-  pointer-events: none;
+position: fixed; top: 0; left: 0;
+width: 100vw; height: 100vh;
+background: rgba(0, 0, 0, 0.5);
+display: flex; justify-content: center; align-items: center;
+z-index: 10;
+transition: opacity 0.5s ease;
+opacity: 0;
+pointer-events: none;
 }
 
 .overlay.active {
-  opacity: 1;
-  pointer-events: all;
+opacity: 1;
+pointer-events: all;
 }
 
 .form-popup {
-  background: white; padding: 30px 25px; border-radius: 12px;
-  width: 320px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-  opacity: 0; transform: scale(0.9);
-  animation: fadeInZoom 0.4s forwards;
+background: white; padding: 30px 25px; border-radius: 12px;
+width: 320px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+opacity: 0; transform: scale(0.9);
+animation: fadeInZoom 0.4s forwards;
 }
 
 @keyframes fadeInZoom {
-  0% { opacity: 0; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1); }
+0% { opacity: 0; transform: scale(0.9); }
+100% { opacity: 1; transform: scale(1); }
 }
 
 .form-popup h3 {
-  margin-top: 0; font-size: 20px; margin-bottom: 20px;
-  text-align: center;
+margin-top: 0; font-size: 20px; margin-bottom: 20px;
+text-align: center;
 }
 
 .form-popup input,
 .form-popup textarea {
-  width: 100%; padding: 10px; margin-bottom: 15px;
-  font-size: 14px; border: 1px solid #ccc; border-radius: 6px;
+width: 100%; padding: 10px; margin-bottom: 15px;
+font-size: 14px; border: 1px solid #ccc; border-radius: 6px;
 }
 
 .form-popup button {
-  width: 100%; padding: 12px;
-  background: #610000; color: white;
-  border: none; font-weight: bold;
-  font-size: 14px; cursor: pointer; border-radius: 30px;
-  transition: background 0.3s ease;
+width: 100%; padding: 12px;
+background: #610000; color: white;
+border: none; font-weight: bold;
+font-size: 14px; cursor: pointer; border-radius: 30px;
+transition: background 0.3s ease;
 }
 
 .form-popup button:hover {
-  background: #4d0000;
+background: #4d0000;
 }
 
 #successMessage {
-  display: none; text-align: center;
-  margin-top: 15px; font-size: 15px; color: black;
+display: none; text-align: center;
+margin-top: 15px; font-size: 15px; color: black;
 }
 
 max-width: 480px {
-  .form-popup { width: 90%; }
-  .centered-wrapper img { width: 220px; }
+.form-popup { width: 90%; }
+.centered-wrapper video { width: 220px; }
 }
 </style>
 </head>
 <body>
 
 <div class="centered-wrapper">
-  <img src="logo.svg" alt="The Chechen People’s Club" onclick="openForm()" />
+<video autoplay loop muted playsinline onclick="openForm()">
+<source src="logo.mp4" type="video/mp4" />
+Ваш браузер не поддерживает воспроизведение видео.
+</video>
 </div>
 
 <div class="overlay" id="overlay" onclick="closeForm()">
-  <div class="form-popup" onclick="event.stopPropagation()">
-    <h3 id="formTitle">Связаться с нами</h3>
-    <form id="contactForm">
-      <input type="text" name="name" placeholder="Имя" required />
-      <input type="email" name="email" placeholder="Электронная почта" required />
-      <textarea name="message" placeholder="Сообщение" rows="4"></textarea>
-      <button type="submit">Отправить</button>
-    </form>
-    <div id="successMessage">Спасибо! Мы свяжемся с вами.</div>
-  </div>
+<div class="form-popup" onclick="event.stopPropagation()">
+<h3 id="formTitle">Связаться с нами</h3>
+<form id="contactForm">
+<input type="text" name="name" placeholder="Имя" required />
+<input type="email" name="email" placeholder="Электронная почта" required />
+<textarea name="message" placeholder="Сообщение" rows="4"></textarea>
+<button type="submit">Отправить</button>
+</form>
+<div id="successMessage">Спасибо! Мы свяжемся с вами.</div>
+</div>
 </div>
 
 <script>
@@ -117,40 +121,40 @@ const form = document.getElementById("contactForm");
 const formTitle = document.getElementById("formTitle");
 
 function openForm() {
-  overlay.classList.add("active");
-  popup.style.animation = "none";
-  popup.offsetHeight;
-  popup.style.animation = "fadeInZoom 0.4s forwards";
+overlay.classList.add("active");
+popup.style.animation = "none";
+popup.offsetHeight;
+popup.style.animation = "fadeInZoom 0.4s forwards";
 }
 
 function closeForm() {
-  overlay.classList.remove("active");
-  successMessage.style.display = "none";
-  form.style.display = "block";
-  formTitle.style.display = "block";
+overlay.classList.remove("active");
+successMessage.style.display = "none";
+form.style.display = "block";
+formTitle.style.display = "block";
 }
 
 form.addEventListener("submit", function(e) {
-  e.preventDefault();
-  const formData = new FormData(form);
+e.preventDefault();
+const formData = new FormData(form);
 
-  fetch("https://formbold.com/s/9xQ4W", {
-    method: "POST",
-    body: formData
-  })
-  .then(response => {
-    if (response.ok) {
-      form.reset();
-      form.style.display = "none";
-      successMessage.style.display = "block";
-      formTitle.style.display = "none"; // скрываем заголовок после отправки
-    } else {
-      alert("Что-то пошло не так. Попробуйте позже.");
-    }
-  })
-  .catch(error => {
-    alert("Ошибка: " + error.message);
-  });
+fetch("formbold.com/s/9xQ4W", {
+method: "POST",
+body: formData
+})
+.then(response => {
+if (response.ok) {
+form.reset();
+form.style.display = "none";
+successMessage.style.display = "block";
+formTitle.style.display = "none";
+} else {
+alert("Что-то пошло не так. Попробуйте позже.");
+}
+})
+.catch(error => {
+alert("Ошибка: " + error.message);
+});
 });
 </script>
 
