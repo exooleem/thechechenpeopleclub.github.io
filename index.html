@@ -68,9 +68,15 @@ pointer-events: all;
 }
 
 .form-popup {
-background: white; padding: 30px 25px; border-radius: 12px;
-width: 320px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-opacity: 0; transform: scale(0.9);
+background: white;
+padding: 40px 35px;
+border-radius: 12px;
+width: 500px;
+max-height: 90vh;
+overflow-y: auto;
+box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+opacity: 0;
+transform: scale(0.95);
 animation: fadeInZoom 0.4s forwards;
 }
 
@@ -80,20 +86,30 @@ animation: fadeInZoom 0.4s forwards;
 }
 
 .form-popup h3 {
-margin-top: 0; font-size: 20px; margin-bottom: 20px;
+margin-top: 0; font-size: 22px; margin-bottom: 25px;
 text-align: center;
 }
 
 .form-popup input {
-width: 100%; padding: 10px; margin-bottom: 15px;
-font-size: 14px; border: 1px solid #ccc; border-radius: 6px;
+width: 100%;
+padding: 14px;
+margin-bottom: 20px;
+font-size: 16px;
+border: 1px solid #ccc;
+border-radius: 6px;
+box-sizing: border-box;
 }
 
 .form-popup button {
-width: 100%; padding: 12px;
-background: #610000; color: white;
-border: none; font-weight: bold;
-font-size: 14px; cursor: pointer; border-radius: 30px;
+width: 100%;
+padding: 16px;
+background: #610000;
+color: white;
+border: none;
+font-weight: bold;
+font-size: 16px;
+cursor: pointer;
+border-radius: 30px;
 transition: background 0.3s ease;
 }
 
@@ -102,14 +118,24 @@ background: #4d0000;
 }
 
 #successMessage {
-display: none; text-align: center;
-margin-top: 15px; font-size: 15px; color: black;
+display: none;
+text-align: center;
+margin-top: 15px;
+font-size: 16px;
+color: black;
 }
 
-max-width: 480px {
-.form-popup { width: 90%; }
-.logo-static { width: 180px; }
-.logo-rotating { width: 210px; }
+max-width: 600px {
+.form-popup {
+width: 90%;
+padding: 30px 25px;
+}
+.logo-static {
+width: 180px;
+}
+.logo-rotating {
+width: 210px;
+}
 }
 </style>
 </head>
