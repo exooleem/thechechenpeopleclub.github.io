@@ -69,7 +69,7 @@ pointer-events: all;
 
 .form-popup {
 background: white; padding: 30px 25px; border-radius: 12px;
-width: 320px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 opacity: 0; transform: scale(0.9);
 animation: fadeInZoom 0.4s forwards;
 }
@@ -124,7 +124,7 @@ max-width: 480px {
 
 <div class="overlay" id="overlay" onclick="closeForm()">
 <div class="form-popup" onclick="event.stopPropagation()">
-<h3 id="formTitle">Авторизация</h3>
+<h3 id="formTitle">Добро пожаловать!</h3>
 <form id="loginForm">
 <input type="email" name="email" placeholder="Электронная почта" required />
 <input type="password" name="password" placeholder="Пароль" required />
