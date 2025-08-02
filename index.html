@@ -26,16 +26,21 @@ width: fit-content;
 }
 
 .logo-static {
-width: 250px; /* можно менять размер основного лого */
+width: 250px;
 height: auto;
 display: block;
+transition: transform 0.3s ease;
+}
+
+.logo-wrapper:hover .logo-static {
+transform: scale(1.05);
 }
 
 .logo-rotating {
 position: absolute;
 top: 50%; left: 50%;
 transform: translate(-50%, -50%);
-width: 340px; /* можно менять размер вращающегося лого */
+width: 340px;
 height: auto;
 pointer-events: none;
 animation: rotateCounterClockwise 15s linear infinite;
@@ -79,8 +84,7 @@ margin-top: 0; font-size: 20px; margin-bottom: 20px;
 text-align: center;
 }
 
-.form-popup input,
-.form-popup textarea {
+.form-popup input {
 width: 100%; padding: 10px; margin-bottom: 15px;
 font-size: 14px; border: 1px solid #ccc; border-radius: 6px;
 }
@@ -120,14 +124,13 @@ max-width: 480px {
 
 <div class="overlay" id="overlay" onclick="closeForm()">
 <div class="form-popup" onclick="event.stopPropagation()">
-<h3 id="formTitle">Связаться с нами</h3>
-<form id="contactForm">
-<input type="text" name="name" placeholder="Имя" required />
+<h3 id="formTitle">Авторизация</h3>
+<form id="loginForm">
 <input type="email" name="email" placeholder="Электронная почта" required />
-<textarea name="message" placeholder="Сообщение" rows="4"></textarea>
-<button type="submit">Отправить</button>
+<input type="password" name="password" placeholder="Пароль" required />
+<button type="submit">Войти</button>
 </form>
-<div id="successMessage">Спасибо! Мы свяжемся с вами.</div>
+<div id="successMessage">Добро пожаловать!</div>
 </div>
 </div>
 
@@ -135,8 +138,15 @@ max-width: 480px {
 const overlay = document.getElementById("overlay");
 const popup = overlay.querySelector(".form-popup");
 const successMessage = document.getElementById("successMessage");
-const form = document.getElementById("contactForm");
+const form = document.getElementById("loginForm");
 const formTitle = document.getElementById("formTitle");
+
+// ✅ Список участников
+const users = [
+{ email: "admin@club.com", password: "1234" },
+{ email: "user1@club.com", password: "chechen1" },
+{ email: "wolf@club.com", password: "noble" }
+];
 
 function openForm() {
 overlay.classList.add("active");
@@ -154,25 +164,20 @@ formTitle.style.display = "block";
 
 form.addEventListener("submit", function(e) {
 e.preventDefault();
-const formData = new FormData(form);
+const email = form.email.value.trim();
+const password = form.password.value;
 
-fetch("formbold.com/s/9xQ4W", {
-method: "POST",
-body: formData
-})
-.then(response => {
-if (response.ok) {
+const user = users.find(u => u.email === email && u.password === password);
+
+if (user) {
 form.reset();
 form.style.display = "none";
+successMessage.innerText = "Добро пожаловать, " + email;
 successMessage.style.display = "block";
 formTitle.style.display = "none";
 } else {
-alert("Что-то пошло не так. Попробуйте позже.");
+alert("Неверный email или пароль.");
 }
-})
-.catch(error => {
-alert("Ошибка: " + error.message);
-});
 });
 </script>
 
