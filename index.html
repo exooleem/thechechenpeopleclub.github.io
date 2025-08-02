@@ -19,13 +19,33 @@ justify-content: center; align-items: center;
 height: 100vh; text-align: center; padding: 20px;
 }
 
-.centered-wrapper video {
-max-width: 80%; width: 360px; height: auto;
-cursor: pointer; transition: transform 0.3s ease;
-border-radius: 12px;
+.logo-wrapper {
+position: relative;
+width: 360px;
+height: 360px;
+cursor: pointer;
 }
 
-.centered-wrapper video:hover {
+.logo-wrapper img {
+position: absolute;
+top: 0; left: 0;
+width: 100%;
+height: 100%;
+object-fit: contain;
+pointer-events: none;
+transition: transform 0.3s ease;
+}
+
+.logo-wrapper img.rotating {
+animation: rotateCounterClockwise 8s linear infinite;
+}
+
+@keyframes rotateCounterClockwise {
+from { transform: rotate(0deg); }
+to { transform: rotate(-360deg); }
+}
+
+.logo-wrapper:hover img.rotating {
 transform: scale(1.03);
 }
 
@@ -87,17 +107,17 @@ margin-top: 15px; font-size: 15px; color: black;
 
 max-width: 480px {
 .form-popup { width: 90%; }
-.centered-wrapper video { width: 220px; }
+.logo-wrapper { width: 220px; height: 220px; }
 }
 </style>
 </head>
 <body>
 
 <div class="centered-wrapper">
-<video autoplay loop muted playsinline onclick="openForm()">
-<source src="logo.mp4" type="video/mp4" />
-Ваш браузер не поддерживает воспроизведение видео.
-</video>
+<div class="logo-wrapper" onclick="openForm()">
+<img src="logo1.png" alt="Фиксированный логотип">
+<img src="logo2.png" alt="Вращающийся логотип" class="rotating">
+</div>
 </div>
 
 <div class="overlay" id="overlay" onclick="closeForm()">
