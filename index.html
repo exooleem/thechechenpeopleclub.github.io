@@ -21,32 +21,29 @@ height: 100vh; text-align: center; padding: 20px;
 
 .logo-wrapper {
 position: relative;
-width: 360px;
-height: 360px;
 cursor: pointer;
+width: fit-content;
 }
 
-.logo-wrapper img {
+.logo-static {
+width: 200px; /* можно менять размер основного лого */
+height: auto;
+display: block;
+}
+
+.logo-rotating {
 position: absolute;
-top: 0; left: 0;
-width: 100%;
-height: 100%;
-object-fit: contain;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+width: 540px; /* можно менять размер вращающегося лого */
+height: auto;
 pointer-events: none;
-transition: transform 0.3s ease;
-}
-
-.logo-wrapper img.rotating {
 animation: rotateCounterClockwise 8s linear infinite;
 }
 
 @keyframes rotateCounterClockwise {
-from { transform: rotate(0deg); }
-to { transform: rotate(-360deg); }
-}
-
-.logo-wrapper:hover img.rotating {
-transform: scale(1.03);
+from { transform: translate(-50%, -50%) rotate(0deg); }
+to { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
 .overlay {
@@ -107,7 +104,8 @@ margin-top: 15px; font-size: 15px; color: black;
 
 max-width: 480px {
 .form-popup { width: 90%; }
-.logo-wrapper { width: 220px; height: 220px; }
+.logo-static { width: 180px; }
+.logo-rotating { width: 210px; }
 }
 </style>
 </head>
@@ -115,8 +113,8 @@ max-width: 480px {
 
 <div class="centered-wrapper">
 <div class="logo-wrapper" onclick="openForm()">
-<img src="logo1.png" alt="Фиксированный логотип">
-<img src="logo2.png" alt="Вращающийся логотип" class="rotating">
+<img src="logo1.svg" class="logo-static" alt="Фиксированный логотип">
+<img src="logo2.svg" class="logo-rotating" alt="Вращающийся логотип">
 </div>
 </div>
 
