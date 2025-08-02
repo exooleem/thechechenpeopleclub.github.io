@@ -29,11 +29,6 @@ width: fit-content;
 width: 250px;
 height: auto;
 display: block;
-transition: transform 0.3s ease;
-}
-
-.logo-wrapper:hover .logo-static {
-transform: scale(1.05);
 }
 
 .logo-rotating {
@@ -119,10 +114,6 @@ background: #4d0000;
 
 #successMessage {
 display: none;
-text-align: center;
-margin-top: 15px;
-font-size: 16px;
-color: black;
 }
 
 max-width: 600px {
@@ -150,24 +141,22 @@ width: 210px;
 
 <div class="overlay" id="overlay" onclick="closeForm()">
 <div class="form-popup" onclick="event.stopPropagation()">
-<h3 id="formTitle">Авторизация</h3>
+<h3 id="formTitle">Добро пожаловать</h3>
 <form id="loginForm">
 <input type="email" name="email" placeholder="Электронная почта" required />
 <input type="password" name="password" placeholder="Пароль" required />
 <button type="submit">Войти</button>
 </form>
-<div id="successMessage">Добро пожаловать!</div>
+<div id="successMessage"></div>
 </div>
 </div>
 
 <script>
 const overlay = document.getElementById("overlay");
 const popup = overlay.querySelector(".form-popup");
-const successMessage = document.getElementById("successMessage");
 const form = document.getElementById("loginForm");
 const formTitle = document.getElementById("formTitle");
 
-// Список участников
 const users = [
 { email: "admin@club.com", password: "1234" },
 { email: "user1@club.com", password: "chechen1" },
@@ -183,7 +172,6 @@ popup.style.animation = "fadeInZoom 0.4s forwards";
 
 function closeForm() {
 overlay.classList.remove("active");
-successMessage.style.display = "none";
 form.style.display = "block";
 formTitle.style.display = "block";
 }
@@ -198,15 +186,9 @@ const user = users.find(u => u.email === email && u.password === password);
 if (user) {
 localStorage.setItem("user", email);
 
-form.reset();
-form.style.display = "none";
-successMessage.innerText = "Добро пожаловать, " + email;
-successMessage.style.display = "block";
-formTitle.style.display = "none";
-
 setTimeout(() => {
 window.location.href = "home.html";
-}, 1500);
+}, 500); // Плавный переход через полсекунды
 } else {
 alert("Неверный email или пароль.");
 }
