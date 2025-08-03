@@ -1,199 +1,117 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Chechen People’s Club</title>
-<style>
-* { box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Noble Wolf Society</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-html, body {
-margin: 0; padding: 0; height: 100%;
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-background: #ffffff;
-}
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
 
-.centered-wrapper {
-display: flex; flex-direction: column;
-justify-content: center; align-items: center;
-height: 100vh; text-align: center; padding: 20px;
-}
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.8s ease;
+      opacity: 1;
+    }
 
-.logo-wrapper {
-position: relative;
-cursor: pointer;
-width: fit-content;
-}
+    .logo-wrapper {
+      position: relative;
+      width: 340px;
+      height: 340px;
+      cursor: pointer;
+    }
 
-.logo-static {
-width: 250px;
-height: auto;
-display: block;
-}
+    .logo-static, .logo-rotating {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      height: auto;
+    }
 
-.logo-rotating {
-position: absolute;
-top: 50%; left: 50%;
-transform: translate(-50%, -50%);
-width: 340px;
-height: auto;
-pointer-events: none;
-animation: rotateCounterClockwise 15s linear infinite;
-}
+    .logo-static {
+      width: 320px;
+    }
 
-@keyframes rotateCounterClockwise {
-from { transform: translate(-50%, -50%) rotate(0deg); }
-to { transform: translate(-50%, -50%) rotate(-360deg); }
-}
+    .logo-rotating {
+      width: 320px;
+      pointer-events: none;
+      animation: rotateCounterClockwise 15s linear infinite;
+    }
 
-.overlay {
-position: fixed; top: 0; left: 0;
-width: 100vw; height: 100vh;
-background: rgba(0, 0, 0, 0.5);
-display: flex; justify-content: center; align-items: center;
-z-index: 10;
-transition: opacity 0.5s ease;
-opacity: 0;
-pointer-events: none;
-}
-
-.overlay.active {
-opacity: 1;
-pointer-events: all;
-}
-
-.form-popup {
-background: white;
-padding: 40px 35px;
-border-radius: 12px;
-width: 500px;
-max-height: 90vh;
-overflow-y: auto;
-box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-opacity: 0;
-transform: scale(0.95);
-animation: fadeInZoom 0.4s forwards;
-}
-
-@keyframes fadeInZoom {
-0% { opacity: 0; transform: scale(0.9); }
-100% { opacity: 1; transform: scale(1); }
-}
-
-.form-popup h3 {
-margin-top: 0; font-size: 22px; margin-bottom: 25px;
-text-align: center;
-}
-
-.form-popup input {
-width: 100%;
-padding: 14px;
-margin-bottom: 20px;
-font-size: 16px;
-border: 1px solid #ccc;
-border-radius: 6px;
-box-sizing: border-box;
-}
-
-.form-popup button {
-width: 100%;
-padding: 16px;
-background: #610000;
-color: white;
-border: none;
-font-weight: bold;
-font-size: 16px;
-cursor: pointer;
-border-radius: 30px;
-transition: background 0.3s ease;
-}
-
-.form-popup button:hover {
-background: #4d0000;
-}
-
-#successMessage {
-display: none;
-}
-
-max-width: 600px {
-.form-popup {
-width: 90%;
-padding: 30px 25px;
-}
-.logo-static {
-width: 180px;
-}
-.logo-rotating {
-width: 210px;
-}
-}
-</style>
+    @keyframes rotateCounterClockwise {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(-360deg);
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="centered-wrapper">
-<div class="logo-wrapper" onclick="openForm()">
-<img src="logo1.svg" class="logo-static" alt="Фиксированный логотип">
-<img src="logo2.svg" class="logo-rotating" alt="Вращающийся логотип">
-</div>
-</div>
+  <div class="logo-wrapper" id="logoWrapper">
+    <img src="logo1.svg" class="logo-static" alt="Фиксированный логотип" id="logoStatic">
+    <img src="logo2.svg" class="logo-rotating" alt="Вращающийся логотип" id="logoRotating">
+  </div>
 
-<div class="overlay" id="overlay" onclick="closeForm()">
-<div class="form-popup" onclick="event.stopPropagation()">
-<h3 id="formTitle">Добро пожаловать</h3>
-<form id="loginForm">
-<input type="email" name="email" placeholder="Электронная почта" required />
-<input type="password" name="password" placeholder="Пароль" required />
-<button type="submit">Войти</button>
-</form>
-<div id="successMessage"></div>
-</div>
-</div>
+  <script>
+    const logoStatic = document.getElementById('logoStatic');
+    const logoRotating = document.getElementById('logoRotating');
+    const logoWrapper = document.getElementById('logoWrapper');
+    const body = document.body;
 
-<script>
-const overlay = document.getElementById("overlay");
-const popup = overlay.querySelector(".form-popup");
-const form = document.getElementById("loginForm");
-const formTitle = document.getElementById("formTitle");
+    let staticLoaded = false;
+    let rotatingLoaded = false;
 
-const users = [
-{ email: "admin@club.com", password: "1234" },
-{ email: "user1@club.com", password: "chechen1" },
-{ email: "wolf@club.com", password: "noble" }
-];
+    function tryShowLogos() {
+      if (staticLoaded && rotatingLoaded) {
+        logoStatic.style.display = 'block';
+        logoRotating.style.display = 'block';
+      }
+    }
 
-function openForm() {
-overlay.classList.add("active");
-popup.style.animation = "none";
-popup.offsetHeight;
-popup.style.animation = "fadeInZoom 0.4s forwards";
-}
+    function checkImageLoaded(img, onLoadCallback) {
+      if (img.complete) {
+        onLoadCallback();
+      } else {
+        img.addEventListener('load', onLoadCallback);
+      }
+    }
 
-function closeForm() {
-overlay.classList.remove("active");
-form.style.display = "block";
-formTitle.style.display = "block";
-}
+    checkImageLoaded(logoStatic, () => {
+      staticLoaded = true;
+      tryShowLogos();
+    });
 
-form.addEventListener("submit", function(e) {
-e.preventDefault();
-const email = form.email.value.trim();
-const password = form.password.value;
+    checkImageLoaded(logoRotating, () => {
+      rotatingLoaded = true;
+      tryShowLogos();
+    });
 
-const user = users.find(u => u.email === email && u.password === password);
+    logoWrapper.addEventListener('click', () => {
+      // Плавно скрываем body
+      body.style.opacity = '0';
 
-if (user) {
-localStorage.setItem("user", email);
-
-setTimeout(() => {
-window.location.href = "home.html";
-}, 500); // Плавный переход через полсекунды
-} else {
-alert("Неверный email или пароль.");
-}
-});
-</script>
+      // Ждём окончания анимации перед переходом
+      setTimeout(() => {
+        window.location.href = 'home.html';
+      }, 800); // Задержка должна совпадать с transition: 0.8s
+    });
+  </script>
 
 </body>
 </html>
